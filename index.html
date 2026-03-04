@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Happy Birthday Ms Szpila!</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Handlee&display=swap');
+
+body {
+  text-align: center;
+  font-family: 'Handlee', cursive;
+  background: #fffae3;
+  padding: 50px;
+  overflow: hidden;
+}
+
+h1 {
+  color: #ff4081;
+  font-size: 42px;
+}
+
+button {
+  font-size: 22px;
+  padding: 15px 30px;
+  margin: 15px;
+  cursor: pointer;
+  border: none;
+  border-radius: 12px;
+  background: #ffd740;
+  box-shadow: 2px 2px 6px #aaa;
+}
+
+#lyrics {
+  font-size: 22px;
+  margin-top: 20px;
+  height: 30px;
+}
+
+.confetti {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  opacity: 0.7;
+  pointer-events: none;
+}
+</style>
+</head>
+
+<body>
+<h1>🎉 Happy Birthday Ms Szpila! 🎉</h1>
+
+<button id="play">Sing!</button>
+<button id="stop">Stop</button>
+
+<div id="lyrics"></div>
+
+<script>
+const lyrics = [
+  "Happy Birthday to you",
+  "Happy Birthday to you",
+  "Happy Birthday dear Ms Szpila",
+  "Happy Birthday to you"
+];
+
+const melody = [
+  264,264,297,264,352,330,
+  264,264,297,264,396,352,
+  264,264,528,440,352,330,297,
+  466,466,440,352,396,352
+];
+
+const durations = [
+  400,400,800,800,800,1600,
+  400,400,800,800,800,1600,
+  400,400,800,800,800,800,1600,
+  400,400,800,800,800,1600
+];
+
+let audioCtx;
+let oscillators = [];
+let isPlaying = false;
+
+function sing() {
+  if (isPlaying) return;
+  isPlaying = true;
+
+  audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  let time = audioCtx.currentTime;
+
+  melody.forEach((freq, i) => {
+    // choir effect
+    [0.98, 1, 1.02].forEach(detune => {
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = 'sine';
+      osc.frequency.value = freq * detune;
+      gain.gain.value = 0.12;
+
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+
+      osc.start(time);
+      osc.stop(time + durations[i]/1000);
+
+      oscillators.push(osc);
+    });
+
+    if (i % 6 === 0) {
+      const line = Math.floor(i / 6);
+      setTimeout(() => {
+        document.getElementById("lyrics").textContent = lyrics[line] || "";
+      }, (time - audioCtx.currentTime) * 1000);
+    }
+
+    time += durations[i]/1000;
+  });
+
+  confetti();
+}
+
+function stop() {
+  oscillators.forEach(o => o.stop());
+  oscillators = [];
+  if (audioCtx) audioCtx.close();
+  isPlaying = false;
+  document.getElementById("lyrics").textContent = "";
+}
+
+function confetti() {
+  for (let i = 0; i < 60; i++) {
+    const c = document.createElement("div");
+    c.className = "confetti";
+    c.style.background = `hsl(${Math.random()*360},100%,50%)`;
+    c.style.left = Math.random()*window.innerWidth + "px";
+    c.style.top = "-10px";
+    document.body.appendChild(c);
+
+    const fall = setInterval(() => {
+      let top = parseFloat(c.style.top);
+      if (top > window.innerHeight) {
+        c.remove();
+        clearInterval(fall);
+      } else {
+        c.style.top = top + Math.random()*5 + "px";
+      }
+    }, 20);
+  }
+}
+
+document.getElementById("play").onclick = sing;
+document.getElementById("stop").onclick = stop;
+</script>
+</body>
+</html>
