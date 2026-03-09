@@ -3,131 +3,172 @@
 <head>
 <meta charset="UTF-8">
 <title>Happy Birthday Ms Szpila!</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Handlee&display=swap');
 
 body{
-  margin:0;
-  font-family:'Handlee', cursive;
-  background:#fff8dc;
-  text-align:center;
-  overflow:hidden;
-  position:relative;
+margin:0;
+font-family:'Handlee', cursive;
+background:#fff8dc;
+text-align:center;
+overflow:hidden;
+transition:background 2s;
+}
+
+body.night{
+background:#0a0a2a;
 }
 
 h1{
-  margin-top:25px;
-  font-size:42px;
-  color:#ff4081;
-  text-shadow: 1px 1px #aaa;
-}
-
-.controls{
-  margin:15px;
+margin-top:40px;
+font-size:46px;
+color:#ff4081;
 }
 
 button{
-  font-size:18px;
-  padding:12px 20px;
-  margin:6px;
-  border:none;
-  border-radius:10px;
-  cursor:pointer;
-  background:#ffd740;
-  box-shadow:2px 2px 6px #999;
+font-size:20px;
+padding:12px 24px;
+margin:10px;
+border:none;
+border-radius:10px;
+cursor:pointer;
+background:#ffd740;
+box-shadow:2px 2px 6px #999;
 }
 
-#lyrics{
-  font-size:24px;
-  height:35px;
-  margin-top:10px;
-}
-
-#piano{
-  margin:30px auto;
-  display:flex;
-  justify-content:center;
-  height:150px;
-  width:840px;
-}
-
-.key{
-  width:40px;
-  height:150px;
-  background:white;
-  border:1px solid black;
-}
-
-.key.active{
-  background:#ffeb3b;
-}
-
-.confetti{
-  position:absolute;
-  width:10px;
-  height:10px;
-  opacity:0.8;
-}
-
-.balloon{
-  position:absolute;
-  bottom:-120px;
-  width:70px;
-  height:90px;
-  border-radius:50%;
-  opacity:0.85;
-}
+/* CAKE */
 
 #cake{
-  width:200px;
-  height:120px;
-  background:#ff8a65;
-  border-radius:10px;
-  margin:30px auto;
-  position:relative;
-  transition: transform 1s;
+width:200px;
+height:120px;
+background:#ff8a65;
+border-radius:12px;
+margin:40px auto;
+position:relative;
 }
 
 .candles{
-  position:absolute;
-  top:-35px;
-  width:100%;
-  display:flex;
-  justify-content:space-around;
+position:absolute;
+top:-35px;
+width:100%;
+display:flex;
+justify-content:space-around;
 }
 
 .candle{
-  width:12px;
-  height:35px;
-  background:white;
-  border-radius:3px;
-  position:relative;
+width:12px;
+height:35px;
+background:white;
+border-radius:3px;
+position:relative;
 }
 
 .flame{
-  width:12px;
-  height:16px;
-  background:orange;
-  border-radius:50%;
-  position:absolute;
-  top:-15px;
-  animation:flicker 0.2s infinite alternate;
+width:12px;
+height:16px;
+background:orange;
+border-radius:50%;
+position:absolute;
+top:-15px;
+animation:flicker .2s infinite alternate;
 }
 
 @keyframes flicker{
-  from{transform:scale(1)}
-  to{transform:scale(1.2)}
+from{transform:scale(1)}
+to{transform:scale(1.2)}
 }
 
-/* FIREWORKS */
-.firework{
-  position:absolute;
-  width:4px;
-  height:4px;
-  border-radius:50%;
-  pointer-events:none;
+/* CONFETTI */
+
+.confetti{
+position:absolute;
+width:10px;
+height:10px;
 }
+
+/* BALLOONS */
+
+.balloon{
+position:absolute;
+width:80px;
+height:100px;
+border-radius:50% 50% 45% 45%;
+opacity:.95;
+
+box-shadow:
+inset -15px -15px 25px rgba(0,0,0,.25),
+inset 15px 15px 25px rgba(255,255,255,.4);
+
+animation:sway 3s ease-in-out infinite alternate;
+}
+
+.balloon:after{
+content:"";
+position:absolute;
+width:2px;
+height:120px;
+background:#555;
+left:50%;
+top:100%;
+}
+
+@keyframes sway{
+from{transform:rotate(-4deg)}
+to{transform:rotate(4deg)}
+}
+
+/* FIREWORK PARTICLES */
+
+.firework{
+position:absolute;
+width:5px;
+height:5px;
+border-radius:50%;
+}
+
+/* CAKE EXPLOSION */
+
+.piece{
+position:absolute;
+width:8px;
+height:8px;
+border-radius:50%;
+}
+
+/* FINALE MESSAGE */
+
+#finale{
+position:fixed;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+font-size:70px;
+color:white;
+background:#ff4081;
+padding:40px 60px;
+border-radius:20px;
+box-shadow:0 0 40px rgba(0,0,0,0.4);
+opacity:0;
+pointer-events:none;
+}
+
+@keyframes finaleGlow{
+0%{transform:translate(-50%,-50%) scale(0.5);opacity:0;}
+50%{transform:translate(-50%,-50%) scale(1.2);opacity:1;}
+100%{transform:translate(-50%,-50%) scale(1);opacity:1;}
+}
+
+/* STARS */
+
+.star{
+position:absolute;
+width:2px;
+height:2px;
+background:white;
+opacity:.8;
+}
+
 </style>
 </head>
 
@@ -135,36 +176,24 @@ button{
 
 <h1>🎉 Happy Birthday Ms Szpila! 🎉</h1>
 
-<div class="controls">
 <button id="play">Sing</button>
-<button id="stop">Stop</button>
 <button id="replay">Replay</button>
-<button id="faster">Faster</button>
-<button id="slower">Slower</button>
-</div>
-
-<div id="lyrics"></div>
-
-<div id="piano"></div>
 
 <div id="cake">
-  <div class="candles">
-    <div class="candle"><div class="flame"></div></div>
-    <div class="candle"><div class="flame"></div></div>
-    <div class="candle"><div class="flame"></div></div>
-    <div class="candle"><div class="flame"></div></div>
-    <div class="candle"><div class="flame"></div></div>
-  </div>
+<div class="candles">
+<div class="candle"><div class="flame"></div></div>
+<div class="candle"><div class="flame"></div></div>
+<div class="candle"><div class="flame"></div></div>
+<div class="candle"><div class="flame"></div></div>
+<div class="candle"><div class="flame"></div></div>
+</div>
 </div>
 
+<div id="finale">🎉 HAPPY BIRTHDAY MS SZPILA! 🎉</div>
+
 <script>
-// ------------------ MUSIC DATA ------------------
-const lyrics=[
-"Happy Birthday to you",
-"Happy Birthday to you",
-"Happy Birthday dear Ms Szpila",
-"Happy Birthday to you"
-];
+
+/* MUSIC */
 
 const melody=[
 264,264,297,264,352,330,
@@ -173,147 +202,238 @@ const melody=[
 466,466,440,352,396,352
 ];
 
-let durations=[
+const durations=[
 400,400,800,800,800,1600,
 400,400,800,800,800,1600,
 400,400,800,800,800,800,1600,
 400,400,800,800,800,1600
 ];
 
-// ------------------ AUDIO ENGINE ------------------
 let ctx;
-let oscillators=[];
 let playing=false;
-let speed=1;
 
 function sing(){
+
 if(playing) return;
+
 playing=true;
 
-ctx=new (window.AudioContext||window.webkitAudioContext)();
+ctx=new(window.AudioContext||window.webkitAudioContext)();
+
 let time=ctx.currentTime;
 
 melody.forEach((freq,i)=>{
 
-[0.98,1,1.02].forEach(v=>{
-const osc=ctx.createOscillator();
-const gain=ctx.createGain();
-osc.frequency.value=freq*v;
-osc.type='sine';
-gain.gain.value=0.12;
+let osc=ctx.createOscillator();
+let gain=ctx.createGain();
+
+osc.frequency.value=freq;
+gain.gain.value=.15;
+
 osc.connect(gain);
 gain.connect(ctx.destination);
+
 osc.start(time);
-osc.stop(time+(durations[i]/speed)/1000);
-oscillators.push(osc);
+osc.stop(time+durations[i]/1000);
+
+time+=durations[i]/1000;
+
 });
 
-highlightKey(freq);
-
-if(i%6===0){
-let line=Math.floor(i/6);
-setTimeout(()=>{document.getElementById("lyrics").textContent=lyrics[line]||""},(time-ctx.currentTime)*1000);
-}
-
-time+=(durations[i]/speed)/1000;
-});
-
-// CONFETTI & BALLOONS
 confetti();
 balloons();
 
-// FIREWORKS AFTER SONG
-setTimeout(fireworks, (time-ctx.currentTime)*1000);
-setTimeout(blowCandles, (time-ctx.currentTime)*1000);
-setTimeout(growCake, (time-ctx.currentTime)*1000);
+setTimeout(explodeCake,9000);
+setTimeout(startNightSky,9000);
+setTimeout(fireworks,9000);
+setTimeout(showFinale,10500);
+
 }
 
-function stop(){
-oscillators.forEach(o=>o.stop());
-oscillators=[];
-if(ctx) ctx.close();
+/* REPLAY */
+
+function replay(){
 playing=false;
-document.getElementById("lyrics").textContent="";
-resetCake();
+location.reload();
 }
 
-// REPLAY
-function replay(){stop(); setTimeout(sing,200);}
 document.getElementById("play").onclick=sing;
-document.getElementById("stop").onclick=stop;
 document.getElementById("replay").onclick=replay;
 
-// SPEED
-document.getElementById("faster").onclick=()=>{speed*=1.2};
-document.getElementById("slower").onclick=()=>{speed/=1.2};
+/* CONFETTI */
 
-// ------------------ PIANO ------------------
-const piano=document.getElementById("piano");
-for(let i=0;i<21;i++){
-let key=document.createElement("div");
-key.className="key";
-piano.appendChild(key);
-}
-function highlightKey(freq){
-let index=Math.floor(freq/40)%21;
-let key=piano.children[index];
-key.classList.add("active");
-setTimeout(()=>key.classList.remove("active"),200);
-}
-
-// ------------------ CONFETTI ------------------
 function confetti(){
-for(let i=0;i<70;i++){
+
+for(let i=0;i<60;i++){
+
 let c=document.createElement("div");
 c.className="confetti";
+
 c.style.background=`hsl(${Math.random()*360},100%,50%)`;
 c.style.left=Math.random()*window.innerWidth+"px";
 c.style.top="-10px";
+
 document.body.appendChild(c);
+
 let fall=setInterval(()=>{
+
 let top=parseFloat(c.style.top);
-if(top>window.innerHeight){c.remove(); clearInterval(fall);}
-else{c.style.top=top+4+"px";}
-},20);
-}
+
+if(top>window.innerHeight){
+c.remove();
+clearInterval(fall);
+}else{
+c.style.top=top+4+"px";
 }
 
-// ------------------ BALLOONS ------------------
+},20);
+
+}
+
+}
+
+/* BALLOONS */
+
 function balloons(){
-for(let i=0;i<10;i++){
+
+for(let i=0;i<8;i++){
+
 let b=document.createElement("div");
 b.className="balloon";
-b.style.left=Math.random()*window.innerWidth+"px";
+
 b.style.background=`hsl(${Math.random()*360},80%,60%)`;
+
+b.style.left=Math.random()*window.innerWidth+"px";
+b.style.bottom="-120px";
+
 document.body.appendChild(b);
+
 let rise=setInterval(()=>{
+
 let bottom=parseFloat(b.style.bottom);
-if(bottom>window.innerHeight){b.remove(); clearInterval(rise);}
-else{b.style.bottom=(bottom+2)+"px";}
+
+if(bottom>window.innerHeight){
+b.remove();
+clearInterval(rise);
+}else{
+b.style.bottom=bottom+1.5+"px";
+}
+
 },20);
-}
+
 }
 
-// ------------------ CAKE & CANDLES ------------------
-const cake=document.getElementById("cake");
-function blowCandles(){
+}
+
+/* NIGHT SKY */
+
+function startNightSky(){
+
+document.body.classList.add("night");
+
+for(let i=0;i<120;i++){
+
+let s=document.createElement("div");
+s.className="star";
+
+s.style.left=Math.random()*window.innerWidth+"px";
+s.style.top=Math.random()*window.innerHeight+"px";
+
+document.body.appendChild(s);
+
+}
+
+}
+
+/* CAKE EXPLOSION */
+
+function explodeCake(){
+
 document.querySelectorAll(".flame").forEach(f=>f.style.display="none");
-}
-function growCake(){cake.style.transform="scale(1.5)";}
-function resetCake(){cake.style.transform="scale(1)"; document.querySelectorAll(".flame").forEach(f=>f.style.display="block");}
 
-// ------------------ FIREWORKS ------------------
+let cake=document.getElementById("cake");
+
+for(let i=0;i<80;i++){
+
+let p=document.createElement("div");
+p.className="piece";
+
+p.style.background=`hsl(${Math.random()*360},100%,50%)`;
+
+p.style.left=cake.offsetLeft+100+"px";
+p.style.top=cake.offsetTop+60+"px";
+
+document.body.appendChild(p);
+
+let dx=(Math.random()-0.5)*400;
+let dy=(Math.random()-0.5)*400;
+
+p.animate([
+{transform:"translate(0,0)"},
+{transform:`translate(${dx}px,${dy}px)`}
+],{duration:1200});
+
+setTimeout(()=>p.remove(),1200);
+
+}
+
+cake.style.opacity=0;
+
+}
+
+/* FIREWORKS */
+
 function fireworks(){
-for(let i=0;i<50;i++){
+
+for(let i=0;i<6;i++){
+
+setTimeout(()=>{
+
+let x=Math.random()*window.innerWidth;
+let y=Math.random()*window.innerHeight/2;
+
+for(let j=0;j<40;j++){
+
 let f=document.createElement("div");
 f.className="firework";
+
 f.style.background=`hsl(${Math.random()*360},100%,50%)`;
-f.style.left=Math.random()*window.innerWidth+"px";
-f.style.top=Math.random()*window.innerHeight+"px";
+
+f.style.left=x+"px";
+f.style.top=y+"px";
+
 document.body.appendChild(f);
-setTimeout(()=>f.remove(),1500);
+
+let dx=(Math.random()-0.5)*300;
+let dy=(Math.random()-0.5)*300;
+
+f.animate([
+{transform:"translate(0,0)"},
+{transform:`translate(${dx}px,${dy}px)`}
+],{duration:1200});
+
+setTimeout(()=>f.remove(),1200);
+
 }
+
+},i*300);
+
 }
+
+}
+
+/* FINALE MESSAGE */
+
+function showFinale(){
+
+let f=document.getElementById("finale");
+
+f.style.opacity=1;
+f.style.animation="finaleGlow 1s forwards";
+
+}
+
 </script>
+
 </body>
 </html>
